@@ -1,13 +1,14 @@
 package com.github.animeedge.model;
 
 
+import java.util.List;
+
 public class AnimeStudio {
 
     private int id;
-
     private String name;
-
     private int seriesAmount;
+    private List<AnimeSeries> series;
 
     public AnimeStudio(){}
 
@@ -39,5 +40,13 @@ public class AnimeStudio {
 
     public void setSeriesAmount(int seriesAmount) {
         this.seriesAmount = seriesAmount;
+    }
+
+    public List<AnimeSeries> getSeries() {
+        return series;
+    }
+
+    public void setSeries(List<AnimeSeries> series) {
+        this.series = series;
     }
 }
