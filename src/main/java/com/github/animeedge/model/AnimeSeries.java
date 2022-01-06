@@ -1,28 +1,31 @@
 package com.github.animeedge.model;
 
-public class Series {
+import java.util.List;
+
+public class AnimeSeries {
 
     private String id;
-    private Integer studioId;
+    private String studio;
     private String name;
     private String genre;
     private Boolean isMovie;
     private Integer episodes;
     private Integer season;
     private Integer yearAired;
+    private List<AnimeCharacter> characters;
 
-    public Series(){};
+    public AnimeSeries(){};
 
-    public Series(Integer studioId, String name, Boolean isMovie, Integer episodes, Integer yearAired) {
-        this.studioId = studioId;
+    public AnimeSeries(String studio, String name, Boolean isMovie, Integer episodes, Integer yearAired) {
+        this.studio = studio;
         this.name = name;
         this.isMovie = isMovie;
         this.episodes = episodes;
         this.yearAired = yearAired;
     }
 
-    public Series(Integer studioId, String name, String genre, Boolean isMovie, Integer episodes, Integer yearAired) {
-        this.studioId = studioId;
+    public AnimeSeries(String studio, String name, String genre, Boolean isMovie, Integer episodes, Integer yearAired) {
+        this.studio = studio;
         this.name = name;
         this.genre = genre;
         this.isMovie = isMovie;
@@ -30,8 +33,8 @@ public class Series {
         this.yearAired = yearAired;
     }
 
-    public Series(Integer studioId, String name, Boolean isMovie, Integer episodes, Integer season, Integer yearAired) {
-        this.studioId = studioId;
+    public AnimeSeries(String studio, String name, Boolean isMovie, Integer episodes, Integer season, Integer yearAired) {
+        this.studio = studio;
         this.name = name;
         this.isMovie = isMovie;
         this.episodes = episodes;
@@ -39,8 +42,8 @@ public class Series {
         this.yearAired = yearAired;
     }
 
-    public Series(Integer studioId, String name, String genre, Boolean isMovie, Integer episodes, Integer season, Integer yearAired) {
-        this.studioId = studioId;
+    public AnimeSeries(String studio, String name, String genre, Boolean isMovie, Integer episodes, Integer season, Integer yearAired) {
+        this.studio = studio;
         this.name = name;
         this.genre = genre;
         this.isMovie = isMovie;
@@ -57,12 +60,12 @@ public class Series {
         this.id = id;
     }
 
-    public Integer getStudioId() {
-        return studioId;
+    public String getStudio() {
+        return studio;
     }
 
-    public void setStudioId(Integer studioId) {
-        this.studioId = studioId;
+    public void setStudio(String studio) {
+        this.studio = studio;
     }
 
     public String getName() {
@@ -111,5 +114,13 @@ public class Series {
 
     public void setYearAired(Integer yearAired) {
         this.yearAired = yearAired;
+    }
+
+    public List<AnimeCharacter> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<AnimeCharacter> characters) {
+        this.characters = characters;
     }
 }
