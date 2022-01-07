@@ -52,10 +52,6 @@ public class EdgeController {
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<AnimeStudio>>() {
                         }, studioName);
 
-        if(responseEntityStudios.getBody() == null || responseEntityStudios.getBody().size() == 0) {
-            return null;
-        }
-
         AnimeStudio studio = responseEntityStudios.getBody().get(0);
 
         ResponseEntity<List<AnimeSeries>> responseEntitySeries =
@@ -73,14 +69,12 @@ public class EdgeController {
         AnimeSeries series = restTemplate.getForObject(seriesServiceBaseUrl+"/series/name/{seriesName}",
                 AnimeSeries.class, seriesName);
 
-        if(series == null) return null;
-
         ResponseEntity<List<AnimeCharacter>> responseEntityCharacters =
                 restTemplate.exchange(characterServiceBaseUrl + "/characters/anime/{seriesName}",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<AnimeCharacter>>() {
                         }, seriesName);
 
-        if(responseEntityCharacters.getBody() == null) return series;
+        if(responseEntityCharacters.getBody() == null || responseEntityCharacters.getBody().size() == 0) return series;
 
         series.setCharacters(responseEntityCharacters.getBody());
         return series;
@@ -98,7 +92,7 @@ public class EdgeController {
 
         List<AnimeCharacter> modCharacters = new ArrayList<>();
 
-        if(series.getCharacters().size() > 0) {
+        if(series.getCharacters() != null && series.getCharacters().size() > 0) {
             for(AnimeCharacter character : series.getCharacters()) {
 
                 if(!series.getName().equals(character.getAnimeName())) {
