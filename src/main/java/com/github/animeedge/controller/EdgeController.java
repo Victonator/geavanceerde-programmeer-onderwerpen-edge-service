@@ -80,6 +80,28 @@ public class EdgeController {
         return series;
     }
 
+    @GetMapping("/series/all")
+    public List<AnimeSeries> getAllSeries() {
+
+        ResponseEntity<List<AnimeSeries>> responseEntitySeries =
+                restTemplate.exchange(seriesServiceBaseUrl + "/series",
+                        HttpMethod.GET, null, new ParameterizedTypeReference<List<AnimeSeries>>() {
+                        });
+
+        return responseEntitySeries.getBody();
+    }
+
+    @GetMapping("/studios/all")
+    public List<AnimeStudio> getAllStudios() {
+
+        ResponseEntity<List<AnimeStudio>> responseEntityStudios =
+                restTemplate.exchange(studioServiceBaseUrl + "/studios",
+                        HttpMethod.GET, null, new ParameterizedTypeReference<List<AnimeStudio>>() {
+                        });
+
+        return responseEntityStudios.getBody();
+    }
+
     @PutMapping("/series/characters")
     public AnimeSeries putSeriesWithCharacters(@RequestBody AnimeSeries series) {
 
