@@ -7,6 +7,7 @@ Wij hebben gekozen voor anime omdat dat een onderwerp is dat ons interesseert.
 - https://github.com/Victonator/geavanceerde-programmeer-onderwerpen-studios-backend
 - https://github.com/Victonator/geavanceerde-programmeer-onderwerpen-characters-backend
 - https://github.com/Victonator/geavanceerde-programmeer-onderwerpen-series-backend
+- https://github.com/Victonator/geavanceerde-programmeer-onderwerpen-frontend
 
 ### Microservices links
 - Frontend https://gpo-frontend.herokuapp.com/
