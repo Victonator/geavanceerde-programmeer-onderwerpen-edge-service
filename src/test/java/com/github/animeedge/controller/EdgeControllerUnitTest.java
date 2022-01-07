@@ -150,6 +150,7 @@ class EdgeControllerUnitTest {
 
         List<AnimeCharacter> emptyCharacters = new ArrayList<>();
 
+        //Series with 2 characters
         mockServer.expect(ExpectedCount.once(),
                         requestTo(new URI(seriesServiceBaseUrl+"/series/name/Naruto")))
                 .andExpect(method(HttpMethod.GET))
@@ -164,6 +165,7 @@ class EdgeControllerUnitTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .body(mapper.writeValueAsString(responseList)));
 
+        //series with empty character list
         mockServer.expect(ExpectedCount.once(),
                         requestTo(new URI(seriesServiceBaseUrl+"/series/name/Naruto")))
                 .andExpect(method(HttpMethod.GET))

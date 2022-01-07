@@ -74,7 +74,7 @@ public class EdgeController {
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<AnimeCharacter>>() {
                         }, seriesName);
 
-        if(responseEntityCharacters.getBody() == null || responseEntityCharacters.getBody().size() == 0) return series;
+        if(responseEntityCharacters.getBody().isEmpty()) return series;
 
         series.setCharacters(responseEntityCharacters.getBody());
         return series;
