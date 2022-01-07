@@ -16,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.client.ExpectedCount;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -30,7 +29,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -118,8 +116,6 @@ class EdgeControllerUnitTest {
 
         List<AnimeStudio> responseStudio = new ArrayList<>();
         responseStudio.add(studioCoMixWaveFilms);
-
-        List<AnimeStudio> emptyStudio = new ArrayList<>();
 
         mockServer.expect(ExpectedCount.once(),
                         requestTo(new URI(studioServiceBaseUrl+"/studios/CoMix%20Wave%20Films")))
