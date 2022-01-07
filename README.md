@@ -9,7 +9,7 @@ Wij hebben gekozen voor anime omdat dat een onderwerp is dat ons interesseert.
 - https://github.com/Victonator/geavanceerde-programmeer-onderwerpen-series-backend
 
 ### Microservices links
-- Frontend xxx
+- Frontend https://gpo-frontend.herokuapp.com/
 - Swagger https://edge-service-server-victonator.cloud.okteto.net/swagger-ui.html
 - Edge https://edge-service-server-victonator.cloud.okteto.net/
 - Studios https://studio-service-server-victonator.cloud.okteto.net/
