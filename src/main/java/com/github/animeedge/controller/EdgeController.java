@@ -88,16 +88,11 @@ public class EdgeController {
                         HttpMethod.PUT, new HttpEntity<>(new AnimeSeriesDTO(series)), AnimeSeries.class);
 
         AnimeSeries modSeries = responseEntityModSeries.getBody();
-        if(modSeries == null) return null;
 
         List<AnimeCharacter> modCharacters = new ArrayList<>();
 
-        if(series.getCharacters() != null && series.getCharacters().size() > 0) {
+        if(series.getCharacters() != null && !series.getCharacters().isEmpty()) {
             for(AnimeCharacter character : series.getCharacters()) {
-
-                if(!series.getName().equals(character.getAnimeName())) {
-                    character.setAnimeName(series.getName());
-                }
 
                 modCharacters.add(
                         restTemplate.exchange(characterServiceBaseUrl+"/characters",

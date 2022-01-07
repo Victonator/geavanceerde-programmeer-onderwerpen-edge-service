@@ -209,9 +209,11 @@ class EdgeControllerUnitTest {
         modifiedCharacterList.add(modifiedSakura);
         modifiedCharacterList.add(modifiedNaruto);
 
+        List<AnimeCharacter> emptyCharacter = new ArrayList<>();
+
         modifiedSeriesWithCharacters.setCharacters(modifiedCharacterList);
 
-
+        //default scenario: series with at least one character
         mockServer.expect(ExpectedCount.once(),
                 requestTo(new URI(seriesServiceBaseUrl+"/series/0000")))
                 .andExpect(method(HttpMethod.PUT))
@@ -231,8 +233,17 @@ class EdgeControllerUnitTest {
                 .andExpect(method(HttpMethod.PUT))
                 .andRespond(withStatus(HttpStatus.OK)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(mapper.writeValueAsString(modifiedSakura)));
+                        .body(mapper.writeValueAsString(modifiedNaruto)));
 
+        //series with no characters
+        mockServer.expect(ExpectedCount.once(),
+                        requestTo(new URI(seriesServiceBaseUrl+"/series/0000")))
+                .andExpect(method(HttpMethod.PUT))
+                .andRespond(withStatus(HttpStatus.OK)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(mapper.writeValueAsString(modifiedSeries)));
+
+        //series with no empty character list
         mockServer.expect(ExpectedCount.once(),
                         requestTo(new URI(seriesServiceBaseUrl+"/series/0000")))
                 .andExpect(method(HttpMethod.PUT))
@@ -249,6 +260,16 @@ class EdgeControllerUnitTest {
                 .andExpect(jsonPath("$.genre").value("ninja"))
                 .andExpect(jsonPath("$.id").value("0000"));
 
+        mockMvc.perform(put("/series/characters")
+                        .content(mapper.writeValueAsString(modifiedSeries))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.characters").doesNotExist())
+                .andExpect(jsonPath("$.genre").value("ninja"))
+                .andExpect(jsonPath("$.id").value("0000"));
+
+        modifiedSeries.setCharacters(emptyCharacter);
         mockMvc.perform(put("/series/characters")
                         .content(mapper.writeValueAsString(modifiedSeries))
                         .contentType(MediaType.APPLICATION_JSON))
