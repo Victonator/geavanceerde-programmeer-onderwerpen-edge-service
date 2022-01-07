@@ -63,6 +63,7 @@ class EdgeControllerUnitTest {
     private AnimeSeries seriesNaruto = new AnimeSeries("Pierrot", "Naruto", "adventure", false, 57, 1, 2002);
 
     private AnimeStudio studioCoMixWaveFilms = new AnimeStudio("CoMix Wave Films", 86);
+    private AnimeStudio studioMAPPA = new AnimeStudio("MAPPA", 72);
 
     @BeforeEach
     public void initializeMockServer() {
@@ -192,6 +193,47 @@ class EdgeControllerUnitTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.characters").doesNotExist());
+    }
+
+    @Test
+    public void whenGetAllSeries_thenReturnJsonSeries() throws Exception {
+
+        List<AnimeSeries> allSeriesList = new ArrayList<>();
+        allSeriesList.add(seriesNaruto);
+        allSeriesList.add(seriesStudioCWFName);
+        allSeriesList.add(seriesStudioCWFVoices);
+
+        mockServer.expect(ExpectedCount.once(),
+                requestTo(new URI(seriesServiceBaseUrl+"/series")))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withStatus(HttpStatus.OK)
+                        .body(mapper.writeValueAsString(allSeriesList))
+                        .contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(get("/series/all"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(3));
+    }
+
+    @Test
+    public void whenGetAllStudios_thenReturnJsonStudios() throws Exception {
+
+        List<AnimeStudio> allStudiosList = new ArrayList<>();
+        allStudiosList.add(studioCoMixWaveFilms);
+        allStudiosList.add(studioMAPPA);
+
+        mockServer.expect(ExpectedCount.once(),
+                        requestTo(new URI(studioServiceBaseUrl+"/studios")))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withStatus(HttpStatus.OK)
+                        .body(mapper.writeValueAsString(allStudiosList))
+                        .contentType(MediaType.APPLICATION_JSON));
+
+        mockMvc.perform(get("/studios/all"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2));
     }
 
     @Test
