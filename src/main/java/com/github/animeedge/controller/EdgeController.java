@@ -52,10 +52,6 @@ public class EdgeController {
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<AnimeStudio>>() {
                         }, studioName);
 
-        if(responseEntityStudios.getBody() == null || responseEntityStudios.getBody().size() == 0) {
-            return null;
-        }
-
         AnimeStudio studio = responseEntityStudios.getBody().get(0);
 
         ResponseEntity<List<AnimeSeries>> responseEntitySeries =
@@ -73,14 +69,12 @@ public class EdgeController {
         AnimeSeries series = restTemplate.getForObject(seriesServiceBaseUrl+"/series/name/{seriesName}",
                 AnimeSeries.class, seriesName);
 
-        if(series == null) return null;
-
         ResponseEntity<List<AnimeCharacter>> responseEntityCharacters =
                 restTemplate.exchange(characterServiceBaseUrl + "/characters/anime/{seriesName}",
                         HttpMethod.GET, null, new ParameterizedTypeReference<List<AnimeCharacter>>() {
                         }, seriesName);
 
-        if(responseEntityCharacters.getBody() == null) return series;
+        if(responseEntityCharacters.getBody().isEmpty()) return series;
 
         series.setCharacters(responseEntityCharacters.getBody());
         return series;
@@ -94,16 +88,11 @@ public class EdgeController {
                         HttpMethod.PUT, new HttpEntity<>(new AnimeSeriesDTO(series)), AnimeSeries.class);
 
         AnimeSeries modSeries = responseEntityModSeries.getBody();
-        if(modSeries == null) return null;
 
         List<AnimeCharacter> modCharacters = new ArrayList<>();
 
-        if(series.getCharacters().size() > 0) {
+        if(series.getCharacters() != null && !series.getCharacters().isEmpty()) {
             for(AnimeCharacter character : series.getCharacters()) {
-
-                if(!series.getName().equals(character.getAnimeName())) {
-                    character.setAnimeName(series.getName());
-                }
 
                 modCharacters.add(
                         restTemplate.exchange(characterServiceBaseUrl+"/characters",
